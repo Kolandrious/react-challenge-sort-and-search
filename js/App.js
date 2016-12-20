@@ -15,7 +15,6 @@ export default class App extends Component {
       url: this.props.url,
       dataType: 'json',
       cache: false,
-      async: false,
       success: function(users) {
         this.setState({
           users: users,
@@ -26,7 +25,7 @@ export default class App extends Component {
   }
 
   render() {
-
+    if (!this.state) return (<p>...LOADING...</p>)
     return (
       <div>
         <UserList users={this.state.users}/>
