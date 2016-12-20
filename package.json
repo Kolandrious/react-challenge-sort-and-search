@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "eslint": "^2.3.0",
+    "jquery": "^3.1.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
   }
