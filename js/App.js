@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserList from './components/UserList';
 import SelectedUser from './components/SelectedUser';
+import SearchBar from './components/SearchBar';
 import $ from 'jquery';
 
 export default class App extends Component {
@@ -19,7 +20,7 @@ export default class App extends Component {
           users,
           selectedUser: users[0]
         });
-        console.log(users);
+        console.log(users[0]);
       }.bind(this)
     });
   }
@@ -27,6 +28,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <SearchBar />
         <SelectedUser user={this.state.selectedUser} />
         <UserList
           onUserSelect={user => this.setState({selectedUser: user})}
@@ -35,4 +37,6 @@ export default class App extends Component {
       </div>
     );
   }
+
+  //
 }

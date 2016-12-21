@@ -6,12 +6,12 @@ const SelectedUser = ({ user }) => {
   return (
     <table>
     <tbody>
-      <tr><td><img src={`../../images/${user.image}.svg`} alt="loading image" /></td></tr>
+      <tr><td><img src={`../../images/${user.image}.svg`} alt="loading image" height="200px"/></td></tr>
       <tr><td>{user.name}</td></tr>
       <tr><td>Age:</td><td>{user.age}</td></tr>
       <tr><td>Favorite animal:</td><td>{user.image}</td></tr>
       <tr><td>Phone:</td><td>{user.phone}</td></tr>
-      <tr><td>Favorite phrase: {user.phrase}</td></tr>
+      <tr><td width="400px">Favorite phrase: {user.phrase}</td></tr>
     </tbody>
     </table>
   );
