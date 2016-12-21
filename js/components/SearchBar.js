@@ -11,12 +11,16 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
+
     return (
       <input
         type="text"
         placeholder="Search people by name"
         value={this.state.value}
-        onChange={(event) => this.setState({value: event.target.value})}
+        onChange={(event) => {
+          this.setState({value: event.target.value});
+          this.props.search(event.target.value.toLowerCase());
+        }}
       />
     );
   }

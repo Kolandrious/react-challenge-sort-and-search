@@ -9,6 +9,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       users: [],
+      searchTerm: '',
+      displayedUsers: []
     }
 
     $.ajax({
@@ -17,26 +19,40 @@ export default class App extends Component {
       cache: false,
       success: function(users) {
         this.setState({
-          users,
+          users: users,
+          displayedUsers: users,
           selectedUser: users[0]
         });
-        console.log(users[0]);
       }.bind(this)
     });
+
+    this.buildNewUsersList = this.buildNewUsersList.bind(this);
   }
+
+  buildNewUsersList (term) {
+    let newUsers = [];
+    this.state.users.map((user) => {
+      if (user.name.toLowerCase().includes(term)) {
+        newUsers.push(user);
+      }
+    });
+  this.setState({displayedUsers: newUsers, selectedUser: newUsers[0]});
+  }
+
+
 
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar search={this.buildNewUsersList}/>
         <SelectedUser user={this.state.selectedUser} />
         <UserList
           onUserSelect={user => this.setState({selectedUser: user})}
-          users={this.state.users}
+          users={this.state.displayedUsers}
         />
       </div>
     );
   }
 
-  //
+
 }
