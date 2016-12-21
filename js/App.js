@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import UserList from './components/UserList';
+import SelectedUser from './components/SelectedUser';
 import $ from 'jquery';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    state: {
-      users: null
+    this.state = {
+      users: [],
     }
-  }
 
-  componentWillMount() {
     $.ajax({
-      url: this.props.url,
+      url: './data.json',
       dataType: 'json',
       cache: false,
       success: function(users) {
         this.setState({
-          users: users,
+          users,
+          selectedUser: users[0]
         });
         console.log(users);
       }.bind(this)
@@ -25,10 +25,13 @@ export default class App extends Component {
   }
 
   render() {
-    if (!this.state) return (<p>...LOADING...</p>)
     return (
       <div>
-        <UserList users={this.state.users}/>
+        <SelectedUser user={this.state.selectedUser} />
+        <UserList
+          onUserSelect={user => this.setState({selectedUser: user})}
+          users={this.state.users}
+        />
       </div>
     );
   }

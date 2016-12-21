@@ -1,12 +1,14 @@
 import React from 'react';
 
-export default function(props) {
+const UserData = ({ user, onUserSelect }) => {
   return (
-    <tr>
-      <td><img src={`../../images/${props.user.image}.svg`} alt="loading image" /></td>
-      <td>{props.user.name}</td>
-      <td>{props.user.age}</td>
-      <td>{props.user.phone}</td>
+    <tr onClick={() => onUserSelect(user)}>
+      <td><img src={`../../images/${user.image}.svg`} alt="loading image" /></td>
+      <td>{user.name}</td>
+      <td>{user.age}</td>
+      <td>{user.phone}</td>
     </tr>
   );
 }
+
+export default UserData;
