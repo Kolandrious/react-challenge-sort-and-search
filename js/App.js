@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import UserList from './components/UserList';
-import SelectedUser from './components/SelectedUser';
-import SearchBar from './components/SearchBar';
-import SortDisplayedUsers from './components/SortDisplayedUsers';
+import UserList from './UserList';
+import SelectedUser from './SelectedUser';
+import SearchBar from './SearchBar';
+import SortDisplayedUsers from './SortDisplayedUsers';
 
 import $ from 'jquery';
 
@@ -18,7 +18,7 @@ export default class App extends Component {
     }
 
     $.ajax({
-      url: './data.json',
+      url: '../data.json',
       dataType: 'json',
       cache: false,
       success: function(acceptedUsers) {
