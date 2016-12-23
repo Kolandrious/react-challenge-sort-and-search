@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SelectedUser = ({ user }) => {
-  if (!user) return (<h1>no user</h1>);
+  if (!user) return (<h1>no users</h1>);
 
   return (
     <table>
