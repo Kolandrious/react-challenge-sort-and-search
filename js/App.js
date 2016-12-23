@@ -11,8 +11,10 @@ export default class App extends Component {
     super(props);
     this.state = {
       users: [],
+      displayedUsers: [],
       searchTerm: '',
-      displayedUsers: []
+      ageSorted: 'normal',
+      nameSorted: 'normal'
     }
 
     $.ajax({
@@ -30,6 +32,7 @@ export default class App extends Component {
 
     this.buildNewUsersList = this.buildNewUsersList.bind(this);
     this.sortByAge = this.sortByAge.bind(this);
+    this.sortByName = this.sortByName.bind(this);
   }
 
   buildNewUsersList (term) {
@@ -44,14 +47,31 @@ export default class App extends Component {
       selectedUser: newUsers[0],
       searchTerm: term
     });
-    console.log('built new user list on search');
   }
 
-  sortByAge() {
+  sortByName() {
     let newUsers = [];
-    let newList = Array.from(this.state.users);
-    newList.sort((a, b) => { return (a.age - b.age) });
-    this.setState({ users: newList});
+    let newList = this.state.users.concat();
+    if (this.state.nameSorted == 'normal') {
+      newList.sort((a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+      this.setState({ nameSorted: 'reverse', ageSorted: 'normal' });
+    } else {
+      newList.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      this.setState({ nameSorted: 'normal', ageSorted: 'normal' });
+    }
+    this.setState({ users: newList,  });
 
     newList.map((user) => {
       if (user.name.toLowerCase().includes(this.state.searchTerm)) {
@@ -60,8 +80,27 @@ export default class App extends Component {
     });
 
     this.setState({ displayedUsers: newUsers, selectedUser: newUsers[0], });
-    // this.buildNewUsersList(this.state.searchTerm);
-    console.log('sorted by age with term: ' + this.state.searchTerm);
+  }
+
+  sortByAge() {
+    let newUsers = [];
+    let newList = this.state.users.concat();
+    if (this.state.ageSorted == 'normal') {
+      newList.sort((a, b) => { return (a.age - b.age) });
+      this.setState({ ageSorted: 'reverse', nameSorted: 'normal' });
+    } else {
+      newList.sort((a, b) => { return (b.age - a.age) });
+      this.setState({ ageSorted: 'normal', nameSorted: 'normal' });
+    }
+    this.setState({ users: newList,  });
+
+    newList.map((user) => {
+      if (user.name.toLowerCase().includes(this.state.searchTerm)) {
+        newUsers.push(user);
+      }
+    });
+
+    this.setState({ displayedUsers: newUsers, selectedUser: newUsers[0], });
   }
 
 
@@ -70,7 +109,10 @@ export default class App extends Component {
     return (
       <div>
         <SearchBar search={this.buildNewUsersList} />
-        <SortDisplayedUsers sortByAge={this.sortByAge} />
+        <SortDisplayedUsers
+        sortByAge={this.sortByAge}
+        sortByName={this.sortByName}
+        />
         <SelectedUser user={this.state.selectedUser} />
         <UserList
           onUserSelect={user => this.setState({selectedUser: user})}
