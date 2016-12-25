@@ -18,7 +18,7 @@ export default class App extends Component {
     }
 
     $.ajax({
-      url: './data.json',
+      url: '../data.json',
       dataType: 'json',
       cache: false,
       success: function(acceptedUsers) {
